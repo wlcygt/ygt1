@@ -13,7 +13,7 @@ jobs:
       - name: 解压压缩包
         run: unzip GR001.zip
 
-      - name: 打印目录列表（调试用）
+      - name: 打印目录列表（调试）
         run: ls -la
 
       - name: 配置JDK17
@@ -28,8 +28,11 @@ jobs:
           chmod +x gradlew
           ./gradlew assembleDebug
 
+      - name: 查找APK位置
+        run: find . -name "*.apk"
+
       - name: 上传APK制品
         uses: actions/upload-artifact@v4
         with:
           name: debug-apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: ./**/*.apk
