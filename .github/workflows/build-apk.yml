@@ -1,0 +1,39 @@
+name: Build Android Debug APK
+on:
+  workflow_dispatch: # 支持手动点击打包
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 拉取仓库文件（包含GR001.zip）
+      - name: 检出仓库文件
+        uses: actions/checkout@v4
+
+      # 自动解压GR001.zip
+      - name: 解压安卓源码压缩包
+        run: unzip -o GR001.zip
+
+      # 配置JDK11
+      - name: 配置JDK11
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: gradle
+
+      # 给gradlew权限
+      - name: 赋予gradlew执行权限
+        run: chmod +x gradlew
+
+      # 编译debug测试APK
+      - name: 编译Debug APK
+        run: ./gradlew assembleDebug
+
+      # 保存APK，打包结束后下载
+      - name: 上传APK制品
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
