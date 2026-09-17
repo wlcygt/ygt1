@@ -16,7 +16,15 @@ jobs:
       - name: 解压压缩包GR003.zip
         run: unzip GR003.zip
 
-      - name: 解压后查看目录
+      - name: 把解压出来的文件夹重命名为GR003
+        run: |
+          # 查看解压出来的所有文件夹
+          ls -la
+          # 找到解压生成的第一个文件夹，重命名为 GR003
+          FOLD=$(find . -maxdepth 1 -type d ! -path . | head -1)
+          mv "$FOLD" GR003
+
+      - name: 重命名后查看目录
         run: ls -la
 
       - name: 配置JDK17
@@ -27,13 +35,13 @@ jobs:
           cache: gradle
 
       - name: 编译Debug APK
-        运行：|: |
+        run: |
           cd GR003
           chmod +x gradlew
           ./gradlew assembleDebug
 
-      - 名称: 查找APK位置name: 查找APK位置
-        运行：查找 . 目录中名称为 "*.apk" 的文件: find . -name "*.apk"
+      - name: 查找APK位置
+        run: find . -name "*.apk"
 
       - name: 上传APK制品
         uses: actions/upload-artifact@v4
