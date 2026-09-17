@@ -13,17 +13,17 @@ jobs:
       - name: 列出当前目录全部文件
         run: ls -la
 
-      - name: 解压压缩包GR003.zip
-        run: unzip GR003.zip
+      - name: 解压压缩包GR004.zip
+        run: unzip GR004.zip
 
-      - name: 把解压出来的文件夹重命名为GR003
+      - name: 把解压出来的文件夹重命名为GR004
         run: |
           ls -la
           FOLD=$(find . -maxdepth 1 -type d ! -path . | head -1)
-          mv "$FOLD" GR003
+          mv "$FOLD" GR004
 
       - name: 重命名后查看目录
-        run: ls -la GR003
+        run: ls -la GR004
 
       - name: 配置JDK17
         uses: actions/setup-java@v5
@@ -34,7 +34,7 @@ jobs:
 
       - name: 编译Debug APK
         run: |
-          cd GR003
+          cd GR004
           # 修复Windows换行符问题
           sed -i 's/\r$//' gradlew
           chmod +x gradlew
