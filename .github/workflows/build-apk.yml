@@ -27,13 +27,13 @@ jobs:
           cache: gradle
 
       - name: 编译Debug APK
-        run: |
+        运行：|: |
           cd GR003
           chmod +x gradlew
           ./gradlew assembleDebug
 
-      - name: 查找APK位置
-        run: find . -name "*.apk"
+      - 名称: 查找APK位置name: 查找APK位置
+        运行：查找 . 目录中名称为 "*.apk" 的文件: find . -name "*.apk"
 
       - name: 上传APK制品
         uses: actions/upload-artifact@v4
